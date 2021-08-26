@@ -1,0 +1,17 @@
+<p>Mostrando el listado de personas</p>
+<ul>
+  <li *ngFor="let person of persons">
+    {{person.showName()}}
+    <br>
+    Edad: {{person.age}}
+    <button (click)="selectPerson(person)">Modificar</button>
+  </li>
+</ul>
+<div *ngIf="personSelected != null">
+  <h5>Editando el contenido de una persona</h5>
+  <label>Nombre:</label>
+  <input type="text" [(ngModel)]="personSelected.name">
+  <br>
+  <label>Apellido:</label>
+  <input type="text" [(ngModel)]="personSelected.lastName">
+</div>
