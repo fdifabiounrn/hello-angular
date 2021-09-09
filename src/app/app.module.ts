@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import {PersonsAdministrationModule} from "./persons-administration/persons-administration.module";
 import {PersonModule} from "./person/person.module";
 import {HttpClientModule} from "@angular/common/http";
+import {MaterialModule} from "./material/material.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import {HttpClientModule} from "@angular/common/http";
     PersonsAdministrationModule,
     PersonModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
