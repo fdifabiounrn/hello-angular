@@ -1,0 +1,45 @@
+<form [formGroup]="formPerson" novalidate>
+  <label>
+    Nombre:
+    <input type="text" formControlName="name">
+  </label>
+  <ng-container *ngIf="fc.name.invalid && (fc.name.dirty || fc.name.errors)">
+    <small *ngIf="fc.name.errors?.required" class="small">
+      Este campo es requerido.
+    </small>
+    <small *ngIf="fc.name.errors?.minlength" class="small">
+      Este campo requiere al menos 4 caracteres.
+    </small>
+  </ng-container>
+  <br>
+  <label>
+    Apellido:
+    <input type="text" formControlName="lastName">
+  </label>
+  <ng-container *ngIf="fc.lastName.invalid && (fc.lastName.dirty || fc.lastName.errors)">
+    <small *ngIf="fc.lastName.errors?.required" class="small">
+      Este campo es requerido.
+    </small>
+    <small *ngIf="fc.lastName.errors?.minlength" class="small">
+      Este campo requiere al menos 4 caracteres.
+    </small>
+  </ng-container>
+  <br>
+  <label>
+    Edad:
+    <input type="number" formControlName="age">
+  </label>
+  <ng-container *ngIf="fc.age.invalid && (fc.age.dirty || fc.age.errors)">
+    <small *ngIf="fc.age.errors?.required" class="small">
+      Este campo es requerido.
+    </small>
+    <small *ngIf="fc.age.errors?.min" class="small">
+      Ingrese una edad mayor que 1.
+    </small>
+    <small *ngIf="fc.age.errors?.max" class="small">
+      Ingrese una edad menor que 90.
+    </small>
+  </ng-container>
+</form>
+<p>Form value: {{formPerson.value | json}}</p>
+<p>Form status: {{formPerson.status}}</p>
