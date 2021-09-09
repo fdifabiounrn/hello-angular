@@ -6,6 +6,7 @@ import { PersonsListComponent } from './persons-list/persons-list.component';
 import { PersonInfoComponent } from './person-info/person-info.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {PersonService} from "./person.service";
+import {MaterialModule} from "../material/material.module";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {PersonService} from "./person.service";
   imports: [
     CommonModule,
     PersonRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule
   ],
   providers: [PersonService]
 })

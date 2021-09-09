@@ -1,6 +1,19 @@
-<div style="text-align: center">
-  <h1>Bienvenidos a {{title}}</h1>
-</div>
-<div>
-  <router-outlet></router-outlet>
-</div>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  {{title}}
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav
+    fixedInViewport="true"
+    mode="side"
+    opened="{{ isExpanded }}">
+    <sidenav [isExpanded]="isExpanded"></sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content [style.margin-left.px]="!isExpanded ? 60 : 250">
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -12,6 +12,8 @@ export class PersonsListComponent implements OnInit {
 
   persons: Person[] = [];
 
+  displayedColumns: string[] = ['id', 'name', 'age', 'option'];
+
   constructor(private route: Router,
               private personService: PersonService) {
   }
