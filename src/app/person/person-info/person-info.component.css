@@ -1,7 +1,6 @@
-.small{
-  color: red;
-}
-form{
+.input-form{
   display: flex;
-  flex-direction: column;
+}
+mat-card{
+  width: 50%;
 }

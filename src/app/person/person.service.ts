@@ -10,7 +10,7 @@ import {catchError, map} from "rxjs/operators";
 })
 export class PersonService {
 
-  private resourceUrl: string = environment.backendUrl + "persons/";
+  private resourceUrl: string = environment.backendUrl + "persons";
   private resourceUrlHC: string = "http://tesis.lia.unrn.edu.ar:3000/persons"
 
   headers = new HttpHeaders(
@@ -29,12 +29,37 @@ export class PersonService {
   }
 
   public findOne(id: number): Observable<Person | null> {
-    return this.httpClient.get<Person>(this.resourceUrl + id, {headers: this.headers}).pipe(
+    return this.httpClient.get<Person>(this.resourceUrl + "/" + id, {headers: this.headers}).pipe(
       catchError(err => {
         console.log("Error")
         return throwError("La persona no existe.");
       }),
       map(p => new Person(p.id, p.firstName, p.lastName, p.age))
+    )
+  }
+
+  public create(person: Person): Observable<any> {
+    return this.httpClient.post<any>(this.resourceUrl, person, {headers: this.headers}).pipe(
+      catchError(err => {
+        console.log("Error " + err);
+        return throwError("La persona no pudo ser creada.");
+      })
+    )
+  }
+
+  public update(person: Person): Observable<any> {
+    return this.httpClient.put<any>(this.resourceUrl, person, {headers: this.headers}).pipe(
+      catchError(err => {
+        return throwError("La persona no pudo ser actualizada.")
+      })
+    )
+  }
+
+  public delete(id: number): Observable<any> {
+    return this.httpClient.delete<any>(this.resourceUrl + "/" + id, {headers: this.headers}).pipe(
+      catchError(err => {
+        return throwError("La persona contiene informacion asociada.")
+      })
     )
   }
 }

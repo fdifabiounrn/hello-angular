@@ -7,6 +7,7 @@ import { PersonInfoComponent } from './person-info/person-info.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {PersonService} from "./person.service";
 import {MaterialModule} from "../material/material.module";
+import {DialogModule} from "../dialog/dialog.module";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MaterialModule} from "../material/material.module";
     CommonModule,
     PersonRoutingModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    DialogModule
   ],
   providers: [PersonService]
 })
