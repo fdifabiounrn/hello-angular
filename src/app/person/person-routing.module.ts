@@ -4,9 +4,9 @@ import {PersonInfoComponent} from "./person-info/person-info.component";
 import {PersonsListComponent} from "./persons-list/persons-list.component";
 
 const routes: Routes = [
+  {path: '', component: PersonsListComponent},
   {path: 'list', component: PersonsListComponent},
   {path: 'detail', component: PersonInfoComponent},
-  {path: '', redirectTo: 'list', pathMatch: 'full'},
 ];
 
 @NgModule({

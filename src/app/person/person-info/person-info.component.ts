@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Person} from "../../domain/person";
 import {PersonService} from "../../person/person.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-person-info',
@@ -25,7 +26,8 @@ export class PersonInfoComponent implements OnInit {
               private fb: FormBuilder,
               private personService: PersonService,
               private route: Router,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private location: Location) {
   }
 
   ngOnInit(): void {
@@ -64,7 +66,7 @@ export class PersonInfoComponent implements OnInit {
   }
 
   goToBack() {
-    this.route.navigate(["persons", 'list']);
+    this.location.back();
   }
 
   goToList() {
