@@ -5,15 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {PersonsAdministrationModule} from "./persons-administration/persons-administration.module";
 import {PersonModule} from "./person/person.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MaterialModule} from "./material/material.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { SidenavComponent } from './sidenav/sidenav.component';
+import {AuthenticationService} from "./security/service/authentication.service";
+import { LoginFormComponent } from './login/login-form/login-form.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {TokenInterceptor} from "./security/interceptor/token-interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidenavComponent
+    SidenavComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
@@ -22,9 +27,11 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     AppRoutingModule,
     HttpClientModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthenticationService,
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

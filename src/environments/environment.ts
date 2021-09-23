@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  tokenName: "jwt",
   backendUrl: "http://tesis.lia.unrn.edu.ar:3000/"
 };
 
