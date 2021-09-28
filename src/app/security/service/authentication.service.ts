@@ -13,7 +13,7 @@ import {User} from "../../domain/user";
 export class AuthenticationService {
 
   private resourceUrl: string = environment.backendUrl + "login";
-  private _loggedIn: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  public _loggedIn: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private httpClient: HttpClient,
@@ -31,8 +31,15 @@ export class AuthenticationService {
     }
     return this.httpClient.post<any>(this.resourceUrl, login).pipe(
       catchError(err => {
-        console.log("Error " + err);
-        return throwError("Usuario y/o contraseña invalida");
+        let errorMsg: string;
+        switch (err.status) {
+          case 401:
+            errorMsg = "Usuario y/o contraseña invalida";
+            break;
+          default:
+            errorMsg = "Error interno del servidor"
+        }
+        return throwError(errorMsg);
       }),
       tap(resp => {
         localStorage.setItem(environment.tokenName, resp.token);
