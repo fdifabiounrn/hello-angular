@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {catchError, tap} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import {User} from "../../domain/user";
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +13,14 @@ import {Router} from "@angular/router";
 export class AuthenticationService {
 
   private resourceUrl: string = environment.backendUrl + "login";
-  private _loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _loggedIn: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private httpClient: HttpClient,
               private router: Router) {
   }
 
-  get loggedIn(): Observable<boolean> {
+  get loggedIn(): Observable<User | null> {
     return this._loggedIn.asObservable();
   }
 
@@ -32,15 +35,16 @@ export class AuthenticationService {
         return throwError("Usuario y/o contraseña invalida");
       }),
       tap(resp => {
-        console.log("JWT " + resp.token);
         localStorage.setItem(environment.tokenName, resp.token);
-        this._loggedIn.next(true);
+        let decodeToken = this.jwtHelper.decodeToken(resp.token);
+        let user: User = new User(decodeToken.username);
+        this._loggedIn.next(user);
       })
     )
   }
 
   logout() {
-    this._loggedIn.next(false);
+    this._loggedIn.next(null);
     localStorage.removeItem(environment.tokenName);
     return this.router.navigate(['login']);
   }
@@ -51,6 +55,13 @@ export class AuthenticationService {
 
   isLoggedIn(): boolean {
     const token = this.token;
-    return token !== null;
+    if (token !== null && !this.jwtHelper.isTokenExpired(token)) {
+      if (this._loggedIn.value === null) {
+        let user: User = new User(this.jwtHelper.decodeToken(token));
+        this._loggedIn.next(user);
+      }
+      return true;
+    }
+    return false;
   }
 }
